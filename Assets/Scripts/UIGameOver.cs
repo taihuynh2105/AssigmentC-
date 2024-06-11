@@ -28,14 +28,20 @@ public class UIGameOver : MonoBehaviour
 
         ASM_MN.Instance.YC1();
         ASM_MN.Instance.YC2();
-       /* ASM.YC3();
-        ASM.YC4();
-        ASM.YC5();
-        ASM.YC6();
-        ASM.YC7();*/
+        ASM_MN.Instance.YC3();
+        ASM_MN.Instance.YC4();
+        ASM_MN.Instance.YC5();
+        ASM_MN.Instance.YC6();
+        ASM_MN.Instance.YC7();
+
+        /* ASM.YC3();
+         ASM.YC4();
+         ASM.YC5();
+         ASM.YC6();
+         ASM.YC7();*/
     }
 
-    
+
 
 
 }

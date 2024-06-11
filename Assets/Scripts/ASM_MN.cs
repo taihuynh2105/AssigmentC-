@@ -61,11 +61,11 @@ public class ASM_MN : Singleton<ASM_MN>
         {
             return "Hang Dong";
         }
-        else if (score > 100 && score < 500)
+        else if (score >= 100 && score < 500)
         {
             return "Hang Bac";
         }
-        else if (score > 500 && score < 1000)
+        else if (score >= 500 && score < 1000)
         {
             return "Hang Vang";
         }
@@ -129,7 +129,7 @@ public class ASM_MN : Singleton<ASM_MN>
 
         foreach (Players player in listPlayer)
         {
-            Debug.Log("ID: " + player.Id + "| Name: " + player.Name + "| Scores: " + player.Score + "| Region: " + player.PlayerRegion.Name);
+            Debug.Log("ID: " + player.Id + "| Name: " + player.Name + "| Scores: " + player.Score + "| Region: " + player.PlayerRegion.Name + " | Rank: " + calculate_rank(player.Score));
         }
 
 
@@ -137,7 +137,8 @@ public class ASM_MN : Singleton<ASM_MN>
     public void YC3()
     {
         // sinh viên viết tiếp code ở đây
-        int currentScore = listPlayer.FirstOrDefault(player => player.Name == "Nam").Score;
+        int currentScore = ScoreKeeper.Instance.GetScore();
+
 
         Debug.Log("Thông tin các người chơi có điểm số bé hơn điểm số hiện tại của người chơi:");
 
@@ -154,23 +155,60 @@ public class ASM_MN : Singleton<ASM_MN>
     public void YC4()
     {
         // sinh viên viết tiếp code ở đây
+        int currentPlayerId = ScoreKeeper.Instance.GetID();
+        Players currentPlayer = listPlayer.FirstOrDefault(p => p.Id == currentPlayerId);
+
+        if (currentPlayer != null)
+        {
+            Debug.Log("Thông tin người chơi hiện tại: ID: " + currentPlayer.Id + "| Name: " + currentPlayer.Name + "| Scores: " + currentPlayer.Score + "| Region: " + currentPlayer.PlayerRegion.Name + " | Rank: " + calculate_rank(currentPlayer.Score));
+        }
+        else
+        {
+            Debug.Log("Không tìm thấy người chơi hiện tại");
+        }
     }
     public void YC5()
     {
         // sinh viên viết tiếp code ở đây
+        if (listPlayer.Count == 0)
+        {
+            Debug.Log("Không có người chơi nào trong danh sách.");
+            return;
+        }
+        var sortedPlayers = listPlayer.OrderByDescending(p => p.Score).ToList();
+        Debug.Log("Danh sách người chơi theo thứ tự điểm số giảm dần:");
+        foreach (Players player in sortedPlayers)
+        {
+            Debug.Log("ID: " + player.Id + "| Name: " + player.Name + "| Scores: " + player.Score + "| Region: " + player.PlayerRegion.Name + " | Rank: " + calculate_rank(player.Score));
+        }
     }
     public void YC6()
     {
         // sinh viên viết tiếp code ở đây
+        if (listPlayer.Count == 0)
+        {
+            Debug.Log("Không có người chơi nào trong danh sách.");
+            return;
+        }
+
+        var sortedPlayers = listPlayer.OrderBy(p => p.Score).Take(5).ToList();
+        Debug.Log("Top 5 người chơi có điểm số thấp nhất:");
+        foreach (Players player in sortedPlayers)
+        {
+            Debug.Log("ID: " + player.Id + " | Name: " + player.Name + " | Scores: " + player.Score + " | Region: " + player.PlayerRegion.Name + " | Rank: " + calculate_rank(player.Score));
+        }
     }
     public void YC7()
     {
         // sinh viên viết tiếp code ở đây
+        Thread rankingThread = new Thread(CalculateAndSaveAverageScoreByRegion);
+        rankingThread.Name = "BXH";
+        rankingThread.Start();
     }
     void CalculateAndSaveAverageScoreByRegion()
     {
         // sinh viên viết tiếp code ở đây
+       
     }
-
 }
 
